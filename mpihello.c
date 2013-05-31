@@ -11,6 +11,11 @@ int main(int argc, char* argv[])
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 
+	if(size==1){
+		fputs("Need more nodes.\n", stderr);
+		return 1;
+	}
+
 	tosend=(rank+1)%size;
 	torecv=rank-1;
 	if(torecv==-1)
