@@ -36,6 +36,10 @@ int main(int argc, char* argv[])
 		MPI_Send(&i, 1, MPI_UNSIGNED_CHAR, tosend, tosend,	\
 			MPI_COMM_WORLD);
 
+	MPI_Barrier(MPI_COMM_WORLD);
+	if(!rank)
+		puts("Succeed.");
+
 	MPI_Finalize();
 
 	return 0;
