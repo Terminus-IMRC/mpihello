@@ -6,6 +6,8 @@ int main(int argc, char* argv[])
 	int rank, size;
 	int tosend, torecv;
 	unsigned char i;
+	char filename[0xff];
+	FILE* fp;
 
 	MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -16,12 +18,15 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	sprintf(filename, "out%d.txt", rank);
+	fp=fopen(filename, "w");
+
 	tosend=(rank+1)%size;
 	torecv=rank-1;
 	if(torecv==-1)
 		torecv=size-1;
 
-	printf("rank%d/%d, to=%d, from=%d\n", rank, size, tosend, torecv);
+	fprintf(fp, "rank%d/%d, to=%d, from=%d\n", rank, size, tosend, torecv);
 
 	i=0x55;
 
