@@ -8,6 +8,6 @@ all: mpihello
 mpihello: mpihello.o
 
 clean:
-	$(RM) mpihello.o mpihello
+	$(RM) mpihello.o mpihello out*.txt
 
 .PHONY: clean
