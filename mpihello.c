@@ -5,13 +5,16 @@ int main(int argc, char* argv[])
 {
 	int rank, size;
 	int tosend, torecv;
+	int len;
 	unsigned char i;
 	char filename[0xff];
+	char pname[MPI_MAX_PROCESSOR_NAME];
 	FILE* fp;
 
 	MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	MPI_Get_processor_name(pname, &len);
 
 	if(size==1){
 		fputs("Need more nodes.\n", stderr);
@@ -26,7 +29,7 @@ int main(int argc, char* argv[])
 	if(torecv==-1)
 		torecv=size-1;
 
-	fprintf(fp, "rank%d/%d, to=%d, from=%d\n", rank, size, tosend, torecv);
+	fprintf(fp, "rank%d/%d(%s), to=%d, from=%d\n", rank, size, pname, tosend, torecv);
 
 	i=0x55;
 
